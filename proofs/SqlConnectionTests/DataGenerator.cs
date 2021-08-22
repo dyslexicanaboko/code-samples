@@ -1,26 +1,22 @@
 ﻿using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace SqlConnectionTests
 {
 	public class DataGenerator
+		: BaseDal
 	{
 		private readonly int _insertLoops;
-		private readonly string _connectionString;
 		
 		public ConcurrentDictionary<string, int> ErrorsOnOpen { get; private set; }
 
 		public DataGenerator(int insertLoops)
 		{
 			_insertLoops = insertLoops;
-
-			_connectionString = LoadConnectionString();
 
 			ErrorsOnOpen = new ConcurrentDictionary<string, int>();
 		}
@@ -146,16 +142,6 @@ namespace SqlConnectionTests
 			}
 		}
 
-		private string GetQuery()
-		{
-			var dtm = DateTime.UtcNow;
-
-			var sql =
-				$"INSERT INTO dbo.BulkCopyTest(CreatedOnUtc) VALUES ('{dtm:yyyy-MM-dd HH:mm:ss.fffffff}');";
-
-			return sql;
-		}
-
 		public async Task BulkCopy()
 		{
 			//This is written poorly on purpose to cause intentional drag
@@ -205,19 +191,6 @@ namespace SqlConnectionTests
 			dt.Rows.Add(dr);
 
 			return dt;
-		}
-
-		private static string LoadConnectionString()
-		{
-			var builder = new ConfigurationBuilder()
-				.SetBasePath(Directory.GetCurrentDirectory())
-				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
-			var configuration = builder.Build();
-
-			var connectionString = configuration.GetConnectionString("ScratchSpace");
-
-			return connectionString;
 		}
 	}
 }
