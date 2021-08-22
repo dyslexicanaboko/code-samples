@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SqlConnectionTests": {
+      "commandName": "Project",
+      "commandLineArgs": "200"
+    }
+  }
+}
