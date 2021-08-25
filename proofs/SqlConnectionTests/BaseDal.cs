@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
-using System.Text;
-using Microsoft.Extensions.Configuration;
 
 namespace SqlConnectionTests
 {
     public abstract class BaseDal
     {
-        protected readonly string _connectionString;
+        protected readonly string ConnectionString;
 
-        public BaseDal()
+        protected BaseDal()
         {
-            _connectionString = LoadConnectionString();
+            ConnectionString = LoadConnectionString();
         }
 
         private static string LoadConnectionString()
@@ -36,6 +34,25 @@ namespace SqlConnectionTests
                 $"INSERT INTO dbo.BulkCopyTest(CreatedOnUtc) VALUES ('{dtm:yyyy-MM-dd HH:mm:ss.fffffff}');";
 
             return sql;
+        }
+
+        public DateTime[] GetDummyValueList(int valueListSize, int spacingInMilliseconds = 0)
+        {
+            var arr = new DateTime[valueListSize];
+
+            for (var i = 0; i < arr.Length; i++)
+            {
+                var dtm = DateTime.UtcNow;
+
+                if (spacingInMilliseconds > 0)
+                {
+                    dtm = dtm.AddMilliseconds(spacingInMilliseconds);
+                }
+
+                arr[i] = dtm;
+            }
+
+            return arr;
         }
     }
 }

@@ -4,11 +4,11 @@ namespace SqlConnectionTests
 {
 	public partial class Program
 	{
-		private static async Task MainInsertValueList(string[] args)
+		private static void MainInsertValueList(string[] args)
 		{
 			var svc = new InsertValueList();
 
-			await svc.ParameterizedValueList(1000, 0);
+			svc.ParameterizedValueList(1000, 0);
 		}
 	}
 }

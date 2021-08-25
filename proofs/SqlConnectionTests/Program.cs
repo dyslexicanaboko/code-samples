@@ -8,7 +8,7 @@ namespace SqlConnectionTests
 		static async Task Main(string[] args)
 		{
 			//await MainConnectionTest(args);
-			await MainInsertValueList(args);
+			MainInsertValueList(args);
 
 			Console.ForegroundColor = ConsoleColor.Magenta;
 			Console.WriteLine($"Finished @ {DateTime.Now}");

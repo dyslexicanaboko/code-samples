@@ -38,7 +38,7 @@ namespace SqlConnectionTests
 				var dtm = DateTime.UtcNow;
 
 				//dt.Dump();
-				using (var con = new SqlConnection(_connectionString))
+				using (var con = new SqlConnection(ConnectionString))
 				{
 					OpenConnection(con);
 
@@ -73,7 +73,7 @@ namespace SqlConnectionTests
 				var dtm = DateTime.UtcNow;
 
 				//dt.Dump();
-				using (var con = new SqlConnection(_connectionString))
+				using (var con = new SqlConnection(ConnectionString))
 				{
 					OpenConnection(con);
 
@@ -109,7 +109,7 @@ namespace SqlConnectionTests
 				var dtm = DateTime.UtcNow;
 
 				//dt.Dump();
-				using (var con = new SqlConnection(_connectionString))
+				using (var con = new SqlConnection(ConnectionString))
 				{
 					OpenConnection(con);
 
@@ -150,7 +150,7 @@ namespace SqlConnectionTests
 				var dt = GetDataTable();
 
 				//dt.Dump();
-				using (var con = new SqlConnection(_connectionString))
+				using (var con = new SqlConnection(ConnectionString))
 				{
 					con.Open();
 

@@ -2,30 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
 
 namespace SqlConnectionTests
 {
-    public class InsertValueList
+	public class InsertValueList
 		: BaseDal
 	{
-		public async Task<DateTime[]> GetDummyValueList(int valueListSize, int delayInMilliseconds)
+		public void ParameterizedValueList(int valueListSize, int delayInMilliseconds = 100)
 		{
-			var arr = new DateTime[valueListSize];
-
-			for (var i = 0; i < arr.Length; i++)
-			{
-				if(delayInMilliseconds > 0) await Task.Delay(delayInMilliseconds);
-
-				arr[i] = DateTime.UtcNow;
-			}
-
-			return arr;
-		}
-
-		public async Task ParameterizedValueList(int valueListSize, int delayInMilliseconds = 100)
-		{
-			var arr = await GetDummyValueList(valueListSize, delayInMilliseconds);
+			var arr = GetDummyValueList(valueListSize, delayInMilliseconds);
 
 			ParameterizedValueList(arr);
 		}
@@ -54,7 +39,7 @@ namespace SqlConnectionTests
 
 			Console.WriteLine(sql);
 
-			using (var con = new SqlConnection(_connectionString))
+			using (var con = new SqlConnection(ConnectionString))
 			{
 				con.Open();
 
@@ -66,13 +51,5 @@ namespace SqlConnectionTests
 				}
 			}
 		}
-
-        public void InsertViaDbCommandBuilder(params DateTime[] valueList)
-        {
-            var cb = new SqlDataAdapter();
-
-
-           
-        }
 	}
 }
