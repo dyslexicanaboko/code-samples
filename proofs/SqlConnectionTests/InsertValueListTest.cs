@@ -5,7 +5,7 @@ using System.Data;
 
 namespace SqlConnectionTests
 {
-	public class InsertValueList
+	public class InsertValueListTest
 		: BaseDal
 	{
 		public void ParameterizedValueList(int valueListSize, int delayInMilliseconds = 100)
@@ -21,7 +21,7 @@ namespace SqlConnectionTests
 			
 			var lstValues = new List<string>(valueList.Length);
 
-			var lst = new List<SqlParameter>(valueList.Length);
+			var arr = new SqlParameter[valueList.Length];
 
 			for (var i = 0; i < valueList.Length; i++)
 			{
@@ -32,24 +32,14 @@ namespace SqlConnectionTests
 
 				lstValues.Add($"({sqlVariable})");
 
-				lst.Add(p);
+				arr[i] = p;
 			}
 
 			var sql = statement + string.Join(",", lstValues);
 
 			Console.WriteLine(sql);
 
-			using (var con = new SqlConnection(ConnectionString))
-			{
-				con.Open();
-
-				using (var cmd = new SqlCommand(sql, con))
-				{
-					cmd.Parameters.AddRange(lst.ToArray());
-
-					cmd.ExecuteNonQuery();
-				}
-			}
+			ExecuteNonQuery(sql, arr);
 		}
 	}
 }

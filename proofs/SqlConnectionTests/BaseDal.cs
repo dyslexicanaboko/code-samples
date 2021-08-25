@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using Microsoft.Data.SqlClient;
 
 namespace SqlConnectionTests
 {
@@ -53,6 +56,21 @@ namespace SqlConnectionTests
             }
 
             return arr;
+        }
+
+        protected void ExecuteNonQuery(string sql, SqlParameter[] parameters)
+        {
+            using (var con = new SqlConnection(ConnectionString))
+            {
+                con.Open();
+
+                using (var cmd = new SqlCommand(sql, con))
+                {
+                    cmd.Parameters.AddRange(parameters);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
