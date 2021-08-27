@@ -2,7 +2,7 @@
 
 namespace SqlConnectionTests.Models
 {
-    public class InsertValueList
+    public class SqlParamList
     {
         public string Sql { get; set; }
 

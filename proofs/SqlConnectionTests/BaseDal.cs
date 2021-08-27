@@ -4,6 +4,7 @@ using SqlConnectionTests.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace SqlConnectionTests
 {
@@ -73,7 +74,30 @@ namespace SqlConnectionTests
             }
         }
 
-        public List<T> GetNumberCollection<T>(int rows, int columns)
+        /// <summary>
+        /// Get a single NumberCollection object of type T filled with either a constant or random number.
+        /// </summary>
+        /// <typeparam name="T">Any class that inherits from <see cref="NumberCollection1"/></typeparam>
+        /// <param name="columns">Column number corresponding to NumberCollection class number</param>
+        /// <param name="constant">Constant to fill object with or leave it null for random number</param>
+        /// <returns>List of NumberCollection objects of type T</returns>
+        public T GetNumberCollectionSingle<T>(int columns, int? constant = null)
+            where T : NumberCollection1, new()
+        {
+            var nc = GetNumberCollectionList<T>(1, columns, constant).Single();
+
+            return nc;
+        }
+
+        /// <summary>
+        /// Get a list of NumberCollection objects of type T filled with either a constant or random number.
+        /// </summary>
+        /// <typeparam name="T">Any class that inherits from <see cref="NumberCollection1"/></typeparam>
+        /// <param name="rows">Rows to generate</param>
+        /// <param name="columns">Column number corresponding to NumberCollection class number</param>
+        /// <param name="constant">Constant to fill object with or leave it null for random number</param>
+        /// <returns>List of NumberCollection objects of type T</returns>
+        public List<T> GetNumberCollectionList<T>(int rows, int columns, int? constant = null)
             where T : NumberCollection1, new()
         {
             if (columns <= 0 || columns > 10)
@@ -86,6 +110,17 @@ namespace SqlConnectionTests
 
             var rand = new Random();
 
+            Func<int> f;
+
+            if (constant.HasValue)
+            {
+                f = () => constant.Value;
+            }
+            else
+            {
+                f = () => rand.Next();
+            }
+                
             var lst = new List<T>(rows);
 
             for (var r = 0; r < rows; r++)
@@ -94,7 +129,7 @@ namespace SqlConnectionTests
 
                 for (var c = 0; c < columns; c++)
                 {
-                    arr[c] = rand.Next();
+                    arr[c] = f();
                 }
 
                 var nc = new T();

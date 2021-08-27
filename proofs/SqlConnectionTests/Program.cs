@@ -10,7 +10,8 @@ namespace SqlConnectionTests
 			//await MainConnectionTest(args);
 			//MainInsertValueList(args);
 
-            MainGetSql();
+			//MainMultiRowInsert();
+			MainTargetedUpdate();
 
 			Console.ForegroundColor = ConsoleColor.Magenta;
 			Console.WriteLine($"Finished @ {DateTime.Now}");

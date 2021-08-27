@@ -1,35 +1,15 @@
 ﻿using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using SqlConnectionTests.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace SqlConnectionTests
 {
-    public class AutoBuildInsertList
-        : BaseDal
+    public class AutoBuildInsert
+        : AutoBuildSql
     {
-        private static readonly Dictionary<Type, SqlDbType> TypeMap = new Dictionary<Type, SqlDbType>
-        {
-            {typeof(string), SqlDbType.NVarChar},
-            {typeof(char[]), SqlDbType.NVarChar},
-            {typeof(int), SqlDbType.Int},
-            {typeof(short), SqlDbType.SmallInt},
-            {typeof(long), SqlDbType.BigInt},
-            {typeof(byte[]), SqlDbType.VarBinary},
-            {typeof(bool), SqlDbType.Bit},
-            {typeof(DateTime), SqlDbType.DateTime2},
-            {typeof(DateTimeOffset), SqlDbType.DateTimeOffset},
-            {typeof(decimal), SqlDbType.Decimal},
-            {typeof(double), SqlDbType.Float},
-            {typeof(byte), SqlDbType.TinyInt},
-            {typeof(TimeSpan), SqlDbType.Time}
-        };
-
-        public InsertValueList GenerateSql<T>(IList<T> target, string fullTableName, string primaryKey)
+        public SqlParamList GenerateSql<T>(IList<T> target, string fullTableName, string primaryKey)
             where T : new()
         {
             var t = target.First().GetType();
@@ -54,7 +34,7 @@ namespace SqlConnectionTests
 
                 sb.Append("(");
 
-                for (var c = 0; c < properties.Count; c++)
+                for (var c = 0; c < properties.Length; c++)
                 {
                     var colProperty = properties[c];
                     var colType = colProperty.PropertyType;
@@ -84,29 +64,13 @@ namespace SqlConnectionTests
 
             var sql = sb.ToString();
 
-            var values = new InsertValueList
+            var values = new SqlParamList
             {
                 Sql = sql,
                 Parameters = arr
             };
 
             return values;
-        }
-
-        public void ExecuteInsertValueList(InsertValueList values)
-        {
-            ExecuteNonQuery(values.Sql, values.Parameters);
-        }
-
-        private List<PropertyInfo> GetProperties(Type type, string primaryKey)
-        {
-            var properties = type
-                .GetProperties()
-                .Where(x => !x.Name.Equals(primaryKey, StringComparison.InvariantCultureIgnoreCase))
-                .OrderBy(x => x.Name)
-                .ToList();
-
-            return properties;
         }
     }
 }

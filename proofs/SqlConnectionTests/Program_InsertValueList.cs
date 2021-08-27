@@ -6,18 +6,11 @@ namespace SqlConnectionTests
 {
 	public partial class Program
 	{
-		private static void MainInsertValueList(string[] args)
+		private static void MainMultiRowInsert()
 		{
-			var svc = new InsertValueListTest();
+			var svc = new AutoBuildInsert();
 
-			svc.ParameterizedValueList(1000, 0);
-		}
-
-		private static void MainGetSql()
-		{
-			var svc = new AutoBuildInsertList();
-
-			var lst = svc.GetNumberCollection<NumberCollection10>(10, 10);
+			var lst = svc.GetNumberCollectionList<NumberCollection10>(10, 10);
 
 			var sw = new Stopwatch();
 			sw.Start();
@@ -30,7 +23,7 @@ namespace SqlConnectionTests
 			Console.WriteLine(values.Sql);
 			Console.WriteLine();
 
-			svc.ExecuteInsertValueList(values);
+			svc.ExecuteNonQuery(values);
 		}
 	}
 }
