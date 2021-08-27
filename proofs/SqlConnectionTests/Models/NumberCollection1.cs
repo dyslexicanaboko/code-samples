@@ -7,9 +7,9 @@
 
         }
 
-        public NumberCollection1(int number1)
+        public virtual void SetNumbers(params int[] numbers)
         {
-            Number1 = number1;
+            Number1 = numbers[0];
         }
 
         //Primary key, use ignore attribute or don't include in the model

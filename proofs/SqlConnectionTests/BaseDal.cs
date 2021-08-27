@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using SqlConnectionTests.Models;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.Data.SqlClient;
 
 namespace SqlConnectionTests
 {
@@ -71,6 +71,40 @@ namespace SqlConnectionTests
                     cmd.ExecuteNonQuery();
                 }
             }
+        }
+
+        public List<T> GetNumberCollection<T>(int rows, int columns)
+            where T : NumberCollection1, new()
+        {
+            if (columns <= 0 || columns > 10)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(columns),
+                    columns,
+                    "Columns must be between 1 and 10 inclusive.");
+            }
+
+            var rand = new Random();
+
+            var lst = new List<T>(rows);
+
+            for (var r = 0; r < rows; r++)
+            {
+                var arr = new int[columns];
+
+                for (var c = 0; c < columns; c++)
+                {
+                    arr[c] = rand.Next();
+                }
+
+                var nc = new T();
+
+                nc.SetNumbers(arr);
+
+                lst.Add(nc);
+            }
+
+            return lst;
         }
     }
 }

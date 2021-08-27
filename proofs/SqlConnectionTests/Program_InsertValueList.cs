@@ -1,6 +1,6 @@
 ﻿using SqlConnectionTests.Models;
 using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace SqlConnectionTests
 {
@@ -17,18 +17,16 @@ namespace SqlConnectionTests
 		{
 			var svc = new AutoBuildInsertList();
 
-			var r = new Random();
+			var lst = svc.GetNumberCollection<NumberCollection10>(10, 10);
 
-			var lst = new List<NumberCollection2>(10);
-
-			for (var i = 0; i < lst.Capacity; i++)
-			{
-				//lst.Add(new NumberCollection1(r.Next()));
-				lst.Add(new NumberCollection2(r.Next(), r.Next()));
-			}
+			var sw = new Stopwatch();
+			sw.Start();
 
 			var values = svc.GenerateSql(lst, "dbo.NumberCollection", "NumberCollectionId");
 
+			sw.Stop();
+
+			Console.WriteLine($"Elapsed {sw.ElapsedMilliseconds}ms");
 			Console.WriteLine(values.Sql);
 			Console.WriteLine();
 

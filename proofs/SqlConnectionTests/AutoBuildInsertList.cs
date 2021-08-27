@@ -52,23 +52,21 @@ namespace SqlConnectionTests
             {
                 var row = target[r];
 
-                var rowProperties = GetProperties(row.GetType(), primaryKey);
-
                 sb.Append("(");
 
                 for (var c = 0; c < properties.Count; c++)
                 {
-                    var colProperty = rowProperties[c];
+                    var colProperty = properties[c];
                     var colType = colProperty.PropertyType;
 
                     var sqlVariable = $"@r{r}c{c}";
+
+                    sb.Append(sqlVariable).Append(",");
 
                     var p = new SqlParameter();
                     p.ParameterName = sqlVariable;
                     p.SqlDbType = TypeMap[colType];
                     p.Value = colProperty.GetValue(row);
-
-                    sb.Append(sqlVariable).Append(",");
 
                     arr[pCount] = p;
 
