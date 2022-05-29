@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tables</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="site.css" rel="stylesheet">
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="jquery/jquery-3.6.0.min.js"></script>
+    <script src="table-add-remove.js"></script>
+</head>
+
+<body>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                Control: Table with text box input and remove buttons per row.
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <input id="txtAddItem" type="text" /> <button onclick="btnAddItemOnClick()">Add</button><br/>
+                <table class="form-control table table-striped table-secondary">
+                    <thead>
+                        <tr>
+                            <th>Item[string]</th>
+                            <th>X</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyItems">
+                        <!-- Assume that this data has been loaded, so it is Initial or Existing data. -->
+                        <tr id="trExisting0"> <!-- Using a for loop, you can load the ids here sequentially, id = 0 here -->
+                            <td>Existing item 0</td> <!-- id = 0 -->
+                            <td>
+                                <button onclick="btnRemoveItemOnClick('trExisting0')">X</button>  <!-- id = 0 -->
+                            </td>
+                        </tr>
+                        <tr id="trExisting1"> <!-- id = 1 -->
+                            <td>Existing item 1</td><td><button onclick="btnRemoveItemOnClick('trExisting1')">X</button></td>
+                        </tr>
+                        <tr id="trExisting2"> <!-- id = 2 -->
+                            <td>Existing item 2</td><td><button onclick="btnRemoveItemOnClick('trExisting2')">X</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<footer>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                Output / Messages
+            </div>
+        </div> 
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <span id="spanForGet" class="form-control"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>
