@@ -10,13 +10,6 @@ function jqPrint(text) {
     span.html(text);
 }
 
-//https://www.w3schools.com/js/js_random.asp
-function getRandomNumberInclusive(min, max) {
-    var n = Math.floor(Math.random() * (max - min + 1) ) + min;
-
-    return n;
-}
-
 //https://www.w3schools.com/jsref/coll_table_rows.asp
 //https://www.w3schools.com/jsref/coll_table_cells.asp
 function vjsGetSelectedValue() {
