@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Date and Time tests</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="site.css" rel="stylesheet" />
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="input-date.js"></script>
+  </head>
+  <body>
+    <ul>
+      <li>
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date"
+          target="_blank"
+          >https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://www.w3.org/TR/2011/WD-html-markup-20110525/input.date.html"
+          target="_blank"
+          >https://www.w3.org/TR/2011/WD-html-markup-20110525/input.date.html</a
+        >
+      </li>
+    </ul>
+    <div>
+      <input type="date" id="date" value="2023-08-22" />
+      <button onclick="getDateValue()">Show value</button>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <td>value[AsString]</td>
+          <td id="tdValue"></td>
+        </tr>
+        <tr>
+          <td>valueAsNumber</td>
+          <td id="tdValueAsNumber"></td>
+        </tr>
+        <tr>
+          <td>valueAsDate</td>
+          <td id="tdValueAsDate"></td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
